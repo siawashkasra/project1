@@ -1,3 +1,3 @@
 # Project 1
 
-Web Programming with Python and JavaScript
+This is a robust Book rating and reviewing application.
