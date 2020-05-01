@@ -12,21 +12,6 @@ class Import:
     # create a 'scoped session' that ensures different users' interactions with the
     db = scoped_session(sessionmaker(bind=engine))
 
-    #Initialize
-    def __init__(self):
-        print("Class initialized!")
-        query1 = ("DROP TABLE IF EXISTS books")
-        query2 = """CREATE TABLE books (
-            id SERIAL PRIMARY KEY,
-            isbn VARCHAR(255) NOT NULL,
-            title VARCHAR(255) NOT NULL, 
-            author VARCHAR(255) NOT NULL, 
-            year VARCHAR(255) NOT NULL
-            );"""
-
-        Import.db.execute(query1)
-        Import.db.execute(query2)
-
     #Read the contents of the file
     #Populate the table with the contents
     def populate(self, file):
@@ -50,6 +35,6 @@ class Import:
 
 
 if __name__ == "__main__":
-    impo = Import()
-    impo.populate("books.csv")
-    impo.db.commit()
+    im = Import()
+    im.populate("books.csv")
+    Import.db.commit()
