@@ -13,3 +13,11 @@ input[type="search"]:active, input[type="search"]:hover {
 .search {
     padding: 10px;
 }
+
+.col {
+    padding: 10px;
+}
+
+.card-img-top {
+    height: 300px !important;
+}

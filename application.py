@@ -21,12 +21,17 @@ URL = "https://www.goodreads.com/book"
 # # Session(app)
 
 # # Set up database
-# engine = create_engine(os.getenv("postgres://uiefwmibakeakm:662c66f65687c9418a7011fe4ffc709b0574cc588a4a2b60518d6553d0e69491@ec2-50-17-21-170.compute-1.amazonaws.com:5432/d37pte45s6aeno"))
-# db = scoped_session(sessionmaker(bind=engine))
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
 
 
 @app.route("/")
 def index():
-    res = requests.get("https://www.goodreads.com/search/index.xml", params={"key": "dyzaWnHdIdb8VG2oGwSUcw"})
-    print(res.json())
-    return render_template('index.html')
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "dyzaWnHdIdb8VG2oGwSUcw", "isbns": "9781632168146"})
+    print(res.json()["books"][0]["id"])
+    book_id = res.json()["books"][0]["isbn"]
+
+    books = db.execute("select * from books limit 10").fetchall()
+    # for book in books:
+    #     print(books)
+    return render_template('index.html', books=books)

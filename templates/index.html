@@ -46,25 +46,36 @@
     <div class="container">
 
     <!-- Search Starts-->
-    <div class="row justify-content-end">
-        <div class="col-8 search">
+    <div class="row justify-content-center">
+        <div class="col search">
             <form class="form-block my-lg-0">
                 <input class="form-control" type="search" placeholder="Search" aria-label="Search">
             </form>
         </div>
     </div>
     <!--Search Ends-->
-        <div class="row ">
-            <div class="col-6">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="row books">
+                {% for book in books %}
+                <div class="col">
+                  <div class="card" style="width: 18rem;">
+                    <img class="card-img-top img-fluid" src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-L.jpg" alt="{{book.title}}">
                     <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                      <h5 class="card-title">{{ book.title }}</h5>
+                      <p class="card-text">{{ book.author }}</p>
+                      <div class="row justify-content-between">
+                        <div class="col-3">
+                          <small class="text-muted">Year</small>
+                          <p class="card-text">{{ book.year }}</p>
+                        </div>
+                        <div class="col-6">
+                          <small class="text-muted">ISBN</small>
+                          <p class="card-text">{{ book.isbn }}</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-            </div>
+                </div>
+              </div>
+              {% endfor %}
         </div>
     </div>
     <!--Main Content Ends-->
