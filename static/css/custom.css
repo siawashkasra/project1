@@ -1,0 +1,15 @@
+input[type="search"] {
+    text-align: center;
+}
+
+input[type="search"]:active, input[type="search"]:hover {
+    text-align:center ;
+    height: 10vh;
+    font-size: x-large;
+    border-radius: 10px;
+    border-width: 2px;
+}
+
+.search {
+    padding: 10px;
+}
