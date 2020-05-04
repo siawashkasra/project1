@@ -46,34 +46,57 @@
     <div class="container">
 
     <!-- Search Starts-->
-    <div class="row justify-content-center">
-        <div class="col search">
-            <form class="form-block my-lg-0">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+    <div class="row">
+          <div class="col search">
+            <form class="form-block my-lg-0" action="{{ url_for('index') }}" method="GET">
+                <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
             </form>
+                <div class="row message">
+                  <div class="col">
+                    {% if message and message["error"] %}
+                    <div class="alert alert-danger" role="alert">
+                      <p>No results were found for <i><b>{{ message["error"] }}!</b></i></p>
+                    </div>
+                    {% elif message and message["success"] %}
+                      <div class="alert alert-success" role="alert">
+                        <p>Results for <i><b>{{ message["success"] }}</b></i></p>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
         </div>
     </div>
     <!--Search Ends-->
-        <div class="row books">
+        <div class="row books justify-content-start">
                 {% for book in books %}
                 <div class="col">
-                  <div class="card" style="width: 18rem;">
-                    <img class="card-img-top img-fluid" src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-L.jpg" alt="{{book.title}}">
-                    <div class="card-body">
-                      <h5 class="card-title">{{ book.title }}</h5>
-                      <p class="card-text">{{ book.author }}</p>
-                      <div class="row justify-content-between">
-                        <div class="col-3">
-                          <small class="text-muted">Year</small>
-                          <p class="card-text">{{ book.year }}</p>
+                    <div class="card" style="width: 18rem;">
+                        <!-- <div class="row">
+                          <div class="col-4">
+                          </div>
+                        </div> -->
+                        <div class="card-body">
+                            <div class="row justify-content-between">
+                              <div class="col-9">
+                                <h5 class="card-title">{{ book.title }}</h5>
+                                <p class="card-text">{{ book.author }}</p>
+                              </div>
+                              <div class="col-3">
+                                <img class="card-img-top img-fluid" src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-S.jpg">
+                              </div>
+                            </div>
+                            <div class="row justify-content-between">
+                                <div class="col-3">
+                                  <small class="text-muted">Year</small>
+                                  <p class="card-text">{{ book.year }}</p>
+                                </div>
+                                <div class="col-6">
+                                  <small class="text-muted">ISBN</small>
+                                  <p class="card-text">{{ book.isbn }}</p>
+                                </div>
+                          </div>
                         </div>
-                        <div class="col-6">
-                          <small class="text-muted">ISBN</small>
-                          <p class="card-text">{{ book.isbn }}</p>
-                        </div>
-                      </div>
                     </div>
-                </div>
               </div>
               {% endfor %}
         </div>

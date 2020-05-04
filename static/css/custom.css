@@ -19,5 +19,5 @@ input[type="search"]:active, input[type="search"]:hover {
 }
 
 .card-img-top {
-    height: 300px !important;
+    width: 40px !important;
 }

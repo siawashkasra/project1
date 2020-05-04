@@ -5,10 +5,9 @@ from flask import Flask, session
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from flask import render_template
+from flask import render_template, request
 
 app = Flask(__name__)
-
 KEY = "dyzaWnHdIdb8VG2oGwSUcw"
 URL = "https://www.goodreads.com/book"
 # # Check for environment variable
@@ -27,11 +26,21 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
+    books = []
+    message = "message"
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "dyzaWnHdIdb8VG2oGwSUcw", "isbns": "9781632168146"})
     print(res.json()["books"][0]["id"])
     book_id = res.json()["books"][0]["isbn"]
 
-    books = db.execute("select * from books limit 10").fetchall()
+    books = db.execute("select * from books limit 9 offset 1").fetchall()
     # for book in books:
     #     print(books)
-    return render_template('index.html', books=books)
+    search = request.args.get("search")
+    if search:
+        res = db.execute(f"select * from books where title ilike '%{search}%' or author ilike '%{search}%' or isbn ilike '%{search}%';").fetchall()
+        if res:
+            return render_template('index.html', books=res, message={"success":search})
+        else:
+            return render_template('index.html', books=res, message={"error":search})
+    return render_template('index.html', books=books, message=message)
+    
