@@ -28,7 +28,6 @@ db = scoped_session(sessionmaker(bind=engine))
 def index():
     books = []
     message = "message"
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": "9781632168146"})
     books = db.execute("select * from books limit 9 offset 1").fetchall()
     search = request.args.get("search")
     if search:
@@ -39,6 +38,10 @@ def index():
             return render_template('index.html', books=res, message={"error":search})
     return render_template('index.html', books=books, message=message)
 
-@app.route("/book")
-def show():
-    pass    
+@app.route("/book/<string:isbn>", methods=['GET'])
+def show(isbn):
+    book = db.execute("select * from books where isbn = :isbn", {"isbn": isbn}).fetchone()
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
+    print(len(res.json()["books"][0]["average_rating"]))
+    ratings = res.json()["books"][0]
+    return render_template('pages/book.html', book=book, ratings=ratings)

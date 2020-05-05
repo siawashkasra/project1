@@ -1,5 +1,5 @@
 {% extends "layouts/main.html" %}
-
+{% block title %}Review Analytics{% endblock %}
 {% block main %}
    <!-- Search Starts-->
    <div class="row">
@@ -26,7 +26,8 @@
 <div class="row books justify-content-start">
         {% for book in books %}
         <div class="col">
-            <div class="card" style="width: 18rem;">
+            <a href="{{url_for('show', isbn=book.isbn)}}" disabled>
+              <div class="card" style="width: 18rem;">
                 <!-- <div class="row">
                   <div class="col-4">
                   </div>
@@ -38,7 +39,7 @@
                         <p class="card-text">{{ book.author }}</p>
                       </div>
                       <div class="col-3">
-                        <img class="card-img-top img-fluid" src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-S.jpg" al>
+                        <img class="card-img-top card-books-cover img-fluid" src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-S.jpg" al>
                       </div>
                     </div>
                     <div class="row justify-content-between">
@@ -52,7 +53,8 @@
                         </div>
                   </div>
                 </div>
-            </div>
+              </div>
+            </a>
       </div>
       {% endfor %}
 </div>
