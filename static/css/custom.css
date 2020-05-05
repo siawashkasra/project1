@@ -22,11 +22,6 @@ input[type="search"]:active, input[type="search"]:hover {
     width: 40px !important;
 }
 
-.book {
-    width: 400px;
-    margin: auto;
-}
-
 hr {
     margin-top: 0px;
 }

@@ -26,7 +26,7 @@
 <div class="row books justify-content-start">
         {% for book in books %}
         <div class="col">
-            <a href="{{url_for('show', isbn=book.isbn)}}" disabled>
+            <a href="{{url_for('show', isbn=book.isbn)}}">
               <div class="card" style="width: 18rem;">
                 <!-- <div class="row">
                   <div class="col-4">

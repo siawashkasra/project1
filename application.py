@@ -38,10 +38,17 @@ def index():
             return render_template('index.html', books=res, message={"error":search})
     return render_template('index.html', books=books, message=message)
 
-@app.route("/book/<string:isbn>", methods=['GET'])
+@app.route("/book/<string:isbn>", methods=['GET', 'POST'])
 def show(isbn):
+    if request.method=="POST":
+        store_review(isbn)
+
     book = db.execute("select * from books where isbn = :isbn", {"isbn": isbn}).fetchone()
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
-    print(len(res.json()["books"][0]["average_rating"]))
     ratings = res.json()["books"][0]
     return render_template('pages/book.html', book=book, ratings=ratings)
+
+def store_review(isbn):
+    if request.form:
+        review = request.form.get("review")
+        ratings = request.form.get("ratings")
