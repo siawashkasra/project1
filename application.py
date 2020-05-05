@@ -28,13 +28,8 @@ db = scoped_session(sessionmaker(bind=engine))
 def index():
     books = []
     message = "message"
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "dyzaWnHdIdb8VG2oGwSUcw", "isbns": "9781632168146"})
-    print(res.json()["books"][0]["id"])
-    book_id = res.json()["books"][0]["isbn"]
-
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": "9781632168146"})
     books = db.execute("select * from books limit 9 offset 1").fetchall()
-    # for book in books:
-    #     print(books)
     search = request.args.get("search")
     if search:
         res = db.execute(f"select * from books where title ilike '%{search}%' or author ilike '%{search}%' or isbn ilike '%{search}%';").fetchall()
@@ -43,4 +38,7 @@ def index():
         else:
             return render_template('index.html', books=res, message={"error":search})
     return render_template('index.html', books=books, message=message)
-    
+
+@app.route("/book")
+def show():
+    pass    
