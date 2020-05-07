@@ -56,23 +56,20 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session["username"] = None
+    session.pop("username", None)
     return redirect(url_for("login"))
 
 
 @app.route("/")
 def index():
     if "username" in session:    
-        print(session["username"])
-    else:
-        return redirect(url_for("login"))
-    
-    if user_searched():
-        if get_searched_book(user_searched()):
-            return render_template('index.html', books=get_searched_book(user_searched()), message={"success":user_searched()})
-        else:
-            return render_template('index.html', books=get_all_books(), message={"error":user_searched()})
-    return render_template('index.html', books=get_all_books(), session=session["username"])
+        if user_searched():
+            if get_searched_book(user_searched()):
+                return render_template('index.html', books=get_searched_book(user_searched()), message={"success":user_searched()})
+            else:
+                return render_template('index.html', books=get_all_books(), message={"error":user_searched()})
+        return render_template('index.html', books=get_all_books(), session=session["username"])
+    return redirect(url_for("login"))
 
 
 
@@ -86,14 +83,18 @@ def get_searched_book(search):
 
 @app.route("/book/<string:isbn>", methods=['GET', 'POST'])
 def show(isbn):
-    if request.method=="POST":
-        store_review(isbn)
+    if "username" in session:
+        if request.method=="POST":
+            store_review(isbn)
 
-    book = db.execute("select * from books where isbn = :isbn", {"isbn": isbn}).fetchone()
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
-    ratings = res.json()["books"][0]
-    return render_template('pages/book.html', book=book, ratings=ratings)
+        book = db.execute("select * from books where isbn = :isbn", {"isbn": isbn}).fetchone()
+        res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
+        ratings = res.json()["books"][0]
+        return render_template('pages/book.html', book=book, ratings=ratings)
+    return redirect(url_for("login"))
 
+
+    
 def store_review(isbn):
     if request.form:
         review = request.form.get("review")

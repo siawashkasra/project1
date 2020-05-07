@@ -1,9 +1,14 @@
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import StringField, SubmitField, PasswordField, RadioField
-from wtforms.validators import DataRequired, Email, EqualTo, Length, URL
+from wtforms.validators import DataRequired, Email, EqualTo, Length, URL, ValidationError
 import email_validator
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+import os
 
 class RegistrationForm(FlaskForm):
+    engine = create_engine(os.getenv("DATABASE_URL"))
+    db = scoped_session(sessionmaker(bind=engine))
     first_name = StringField('First Name', [DataRequired()])
     last_name = StringField('Last Name', [DataRequired()])
     email = StringField('Email', [Email(message='Not a valid email address!'), DataRequired()])
@@ -12,6 +17,11 @@ class RegistrationForm(FlaskForm):
     gender = RadioField('Gender', choices = [('M','Male'),('F','Female')])  
     # recaptcha = RecaptchaField()
     submit = SubmitField('Submit')
+
+    def validate_email(self, field):
+        email = RegistrationForm.db.execute("select user_name from users where user_name= :user_name",  {"user_name": field.data}).fetchone()
+        if email:
+            raise ValidationError("Email is already in use!")
 
 
 class LoginForm(FlaskForm):

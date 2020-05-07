@@ -34,7 +34,7 @@ hr {
     color: orange;
 }
 
-a, a:hover, a:focus, a:active {
+.card_link, .card_link:hover, .card_link:focus, .card_link:active {
     text-decoration: none;
     color: inherit;
 }
