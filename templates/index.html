@@ -1,12 +1,9 @@
 {% extends "layouts/main.html" %}
+
 {% block title %}Review Analytics{% endblock %}
+
 {% block main %}
    <!-- Search Starts-->
-   <div class="row">
-    <div class="col search">
-      <form class="form-block my-lg-0" action="{{ url_for('index') }}" method="GET">
-          <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
-      </form>
           <div class="row message">
             <div class="col">
               {% if message and message["error"] %}
@@ -20,10 +17,8 @@
               {% endif %}
             </div>
           </div>
-  </div>
-</div>
 <!--Search Ends-->
-<div class="row books justify-content-start">
+<div class="row">
         {% for book in books %}
         <div class="col">
             <a href="{{url_for('show', id=book.id)}}" class="card_link">
@@ -55,7 +50,7 @@
                 </div>
               </div>
             </a>
-      </div>
+        </div>
       {% endfor %}
 </div>
 {% endblock%}

@@ -3,16 +3,14 @@ input[type="search"] {
 }
 
 input[type="search"]:active, input[type="search"]:hover {
-    text-align:center ;
-    height: 10vh;
-    font-size: x-large;
-    border-radius: 10px;
     border-width: 2px;
 }
 
-.search {
-    padding: 10px;
-}
+.message {
+    font-size: large;
+    text-align: center;
+    font-weight: bolder;
+} 
 
 .col {
     padding: 10px;
@@ -42,6 +40,7 @@ hr {
 .btn-primary {
     float: right;
     margin: 5px;
+    background-color: teal;
 }
 
 
@@ -49,6 +48,23 @@ textarea {
     border-color: antiquewhite !important;
 }
 
-.btn {
+.btn:hover {
     background-color: teal !important;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
 }
+
+
+.card {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+}
+
+.navbar-dark, .dropdown-menu, .dropdown-menu a:hover {
+    background-color: darkslategray !important;
+    /* box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19); */
+
+}
+
+.book {
+    margin-top: 100px;
+}
+

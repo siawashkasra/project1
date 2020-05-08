@@ -1,9 +1,38 @@
 {% extends "layouts/main.html" %}
 
 
+
 {% block main %}
-    <div class="row justify-content-center">
-        <div class="co-5">
+    <div class="row book">
+        <div class="col">
+            {% for r in reviews["all_reviews"]%}
+                <blockquote class="blockquote">
+                <p class="mb-0">{{ r.review }}</p>
+                <footer class="blockquote-footer text-right">{{ r.full_name }} <cite title="Source Title"><small class="text-muted">{{ r.create_date }}</small></cite></footer>
+                </blockquote>
+            {% endfor %}
+            <div class="row">
+                {% if reviews["current_user_submitted"] %}
+                <div class="col">
+                    <form class="was-validated" action="{{ url_for('show', id=book.id) }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <div class="mb-3">
+                          {{ form.reviews(class_="form-control") }}
+                          {% if form.submit.errors %}
+                          <ul>
+                            {% for error in form.submit.errors%}
+                                <li>error</li>
+                            {% endfor %}
+                          </ul>
+                          {% endif %}
+                        </div>
+                        {{ form.submit(class_="btn btn-primary") }}
+                    </form>
+                </div>
+                {% endif %}
+                </div>
+        </div>
+        <div class="col">
             <div class="card" style="width: 30rem;">
                 <div class="row justify-content-between">
                     <div class="col-8">
@@ -40,37 +69,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
-    <br / >
-    {% if reviews["current_user_submitted"] %}
-        <div class="row justify-content-center">
-        <div class="col-5">
-            <form class="was-validated" action="{{ url_for('show', id=book.id) }}" method="POST">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                {{ form.submit(class_="btn btn-primary") }}
-                <div class="mb-3">
-                  {{ form.reviews(class_="form-control") }}
-                  {% if form.submit.errors %}
-                  <ul>
-                    {% for error in form.submit.errors%}
-                        <li>error</li>
-                    {% endfor %}
-                  </ul>
-                  {% endif %}
-                </div>
-            </form>
-        </div>
-    </div>
-    {% endif %}
-    <div class="row justify-content-center">
-        <div class="col-5">
-            <h5>Reviews</h5>
-            {% for r in reviews["all_reviews"]%}
-                <p>{{ r.review }}</p>
-                <i>{{ r.full_name }}</i>
-                {{ r.create_date }}
-                <hr>
-            {% endfor %}
-        </div>
-    </div>
+  
 {% endblock %}
