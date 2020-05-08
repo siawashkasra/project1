@@ -90,6 +90,5 @@ def show(id):
         book = controller.get_book_by_id(id)
         res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
         ratings = res.json()["books"][0]
-        print("this is reivew", controller.is_review_submitted())
-        return render_template('pages/book.html', book=book, ratings=ratings, form =form, reviews={"all_reviews": controller.get_reviews(), "current_user_submitted": controller.is_review_submitted()})
+        return render_template('pages/book.html', book=book, ratings=ratings, form =form, reviews={"all_reviews": controller.get_reviews_by_id(book.id), "current_user_submitted": controller.is_review_submitted(book.id)})
     return redirect(url_for("login"))

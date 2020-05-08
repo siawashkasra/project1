@@ -70,17 +70,18 @@ class Controller():
 
 
 
-    #Return list of all reviews
-    def get_reviews(self):
-        reviews = self.db.execute("select concat(first_name, ' ', last_name) as full_name, user_name, review, date_trunc('second', create_date) as create_date from users u join profiles p on p.user_id = u.id join reviews r on r.user_id = u.id order by create_date desc;").fetchall()
+    #Return list of all reviews for a book
+    def get_reviews_by_id(self, book_id):
+        reviews = self.db.execute("select concat(first_name, ' ', last_name) as full_name, user_name, review, date_trunc('second', create_date) as create_date from users u join profiles p on p.user_id = u.id join reviews r on r.user_id = u.id where book_id = :book_id order by create_date desc;", 
+                                                    {"book_id": book_id}).fetchall()
         return reviews
 
 
 
     #Check if user submitted a review
-    def is_review_submitted(self):
-        review = self.db.execute("select user_id from reviews where user_id = :user_id", 
-                                            {"user_id": session["user_id"]}).fetchone()
+    def is_review_submitted(self, book_id):
+        review = self.db.execute("select id from reviews where user_id = :user_id and book_id = :book_id", 
+                                            {"user_id": session["user_id"], "book_id": book_id}).fetchone()
         print(review)
         if review:
             return False
