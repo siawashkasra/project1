@@ -36,6 +36,7 @@ CREATE TABLE reviews (
                         review VARCHAR(255) NOT NULL,
                         rate VARCHAR(255) NOT NULL,
                         book_id INTEGER REFERENCES books,
-                        user_id INTEGER REFERENCES users
+                        user_id INTEGER REFERENCES users,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );

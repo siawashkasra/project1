@@ -8,7 +8,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import render_template, request
 from flask_login import LoginManager, login_user, logout_user
 from flask_wtf.csrf import CSRFProtect
-from forms import RegistrationForm, LoginForm
+from forms import RegistrationForm, LoginForm, ReviewForm
 
 
 
@@ -42,13 +42,23 @@ def sign_up():
 
 
 
+
+def add_session(user_name):
+    user = db.execute("select id from users where user_name = :user_name", 
+                                        {"user_name": user_name}).fetchone()
+    if user:
+        session["username"] = user_name
+        session["user_id"] = user.id
+    return False
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if request.method=='POST':
         if form.validate_on_submit():
             if is_credentials_valid(form.user_name.data, form.password.data):
-                session["username"] = form.user_name.data
+                add_session(form.user_name.data)
                 flash("You are successfully logged in.")
                 return redirect(url_for('index'))
             render_template("pages/login.html", form=form, error="Wrong credentials!")
@@ -57,6 +67,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop("username", None)
+    session.pop("user_id", None)
     return redirect(url_for("login"))
 
 
@@ -81,24 +92,45 @@ def get_searched_book(search):
     return False
 
 
-@app.route("/book/<string:isbn>", methods=['GET', 'POST'])
-def show(isbn):
+@app.route("/book/<int:id>", methods=['GET', 'POST'])
+def show(id):
+    form = ReviewForm()
     if "username" in session:
         if request.method=="POST":
-            store_review(isbn)
+            add_review(id)
+            return redirect(url_for("show", id=id))
 
-        book = db.execute("select * from books where isbn = :isbn", {"isbn": isbn}).fetchone()
+        book = db.execute("select * from books where id = :id", {"id": id}).fetchone()
         res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
         ratings = res.json()["books"][0]
-        return render_template('pages/book.html', book=book, ratings=ratings)
+        print("this is reivew", is_review_submitted())
+        return render_template('pages/book.html', book=book, ratings=ratings, form =form, reviews={"all_reviews": get_reviews(), "current_user_submitted": is_review_submitted()})
     return redirect(url_for("login"))
 
 
     
-def store_review(isbn):
-    if request.form:
-        review = request.form.get("review")
-        ratings = request.form.get("ratings")
+def add_review(book_id):
+    form = ReviewForm()
+    if form.validate_on_submit():
+        review = form.reviews.data
+        print(review)
+        db.execute("insert into reviews (review, rate, user_id, book_id, create_date) values (:review, :rate, :user_id, :book_id, :create_date)", 
+                                        {"review": review, "rate": "This is rate", "user_id": session["user_id"], "book_id": book_id, "create_date": "now()"})
+        db.commit()
+
+
+
+def get_reviews():
+    reviews = db.execute("select concat(first_name, ' ', last_name) as full_name, user_name, review, date_trunc('second', create_date) as create_date from users u join profiles p on p.user_id = u.id join reviews r on r.user_id = u.id order by create_date desc;").fetchall()
+    return reviews
+
+def is_review_submitted():
+    review = db.execute("select user_id from reviews where user_id = :user_id", 
+                                        {"user_id": session["user_id"]}).fetchone()
+    print(review)
+    if review:
+        return False
+    return True
 
 def get_all_books():
     books = db.execute("select * from books limit 9 offset 1").fetchall()

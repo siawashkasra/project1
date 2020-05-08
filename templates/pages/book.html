@@ -34,32 +34,43 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <!-- <div class="col-4">
                         <img class="card-book-cover card-img-top img-fluid" src="http://covers.openlibrary.org/b/isbn/{{book.isbn}}-M.jpg">
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
     <br / >
+    {% if reviews["current_user_submitted"] %}
+        <div class="row justify-content-center">
+        <div class="col-5">
+            <form class="was-validated" action="{{ url_for('show', id=book.id) }}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                {{ form.submit(class_="btn btn-primary") }}
+                <div class="mb-3">
+                  {{ form.reviews(class_="form-control") }}
+                  {% if form.submit.errors %}
+                  <ul>
+                    {% for error in form.submit.errors%}
+                        <li>error</li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
     <div class="row justify-content-center">
         <div class="col-5">
-            <form class="was-validated" action="{{ url_for('show', isbn=book.isbn) }}" method="POST">
-                <div class="mb-3">
-                  <label for="validationTextarea">Leave a review</label>
-                  <textarea class="form-control is-invalid" id="validationTextarea" name="review" placeholder="Please enter your review" required></textarea>
-                </div>
-              
-                <div class="form-group">
-                  <select class="custom-select" name="ratings" required>
-                    <option value="">Select your rating</option>
-                    {% for i in range(1,6) %}
-                        <option value="{{ i }}">{{ i }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-                <button class="btn btn-primary" type="submit">Submit form</button>
-              </form>
+            <h5>Reviews</h5>
+            {% for r in reviews["all_reviews"]%}
+                <p>{{ r.review }}</p>
+                <i>{{ r.full_name }}</i>
+                {{ r.create_date }}
+                <hr>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

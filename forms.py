@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, SubmitField, PasswordField, RadioField
+from wtforms import StringField, SubmitField, PasswordField, RadioField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, URL, ValidationError
 import email_validator
 from sqlalchemy import create_engine
@@ -28,3 +28,10 @@ class LoginForm(FlaskForm):
     user_name = StringField('User Name', [Email(message='Not a valid email address!'), DataRequired()])
     password = PasswordField('Password', [DataRequired()])
     submit = SubmitField('Submit')
+    
+
+
+
+class ReviewForm(FlaskForm):
+    reviews = TextAreaField('Review', [DataRequired()], render_kw={"placeholder": "Please enter your review"})
+    submit = SubmitField('Leave a review')

@@ -38,3 +38,17 @@ hr {
     text-decoration: none;
     color: inherit;
 }
+
+.btn-primary {
+    float: right;
+    margin: 5px;
+}
+
+
+textarea {
+    border-color: antiquewhite !important;
+}
+
+.btn {
+    background-color: teal !important;
+}
