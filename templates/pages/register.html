@@ -4,31 +4,36 @@
 
 {% block main %}
 
-<div class="row justify-content-center">
-    <div class="col-4">
+<div class="row register justify-content-center">
+    <div class="col-lg-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-4">
+          <h3>Sign Up</h3>
+        </div>
+       </div>
         <form action="{{url_for('sign_up')}}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-            <div class="form-group">
-                {{ form.first_name.label }} {{ form.first_name(size=20, class_="form-control") }}
-                {% if form.first_name.errors %}
+            <div class="form-row">
+                <div class="col">
+                    {{ form.first_name.label }} {{ form.first_name(size=20, class_="form-control") }}
+                    {% if form.first_name.errors %}
                     <ul class="errors">
                     {% for error in form.first_name.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
                   </ul>
                 {% endif %}
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-            </div>
-            <div class="form-group">
-                {{ form.last_name.label }} {{ form.last_name(size=20, class_="form-control") }}
+                </div>
+                <div class="col">
+                  {{ form.last_name.label }} {{ form.last_name(size=20, class_="form-control") }}
                 {% if form.last_name.errors %}
                     <ul class="errors">
                     {% for error in form.last_name.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
-                  </ul>
-                {% endif %}
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </ul>
+                    {% endif %}
+                </div>
             </div>
             <div class="form-group">
                 {{ form.email.label }} {{ form.email(class_="form-control") }}
@@ -41,9 +46,8 @@
                 {% endif %}
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            {{form.gender.label}}
             {% for gender in form.gender %}
-            <div class="form-check">
+            <div class="form-check form-check-inline">
                 {{ gender(class_="form-check-input") }} {{ gender.label }}
             </div>
             {% endfor %}
@@ -56,7 +60,6 @@
                     {% endfor %}
                   </ul>
                 {% endif %}
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
 
             <div class="form-group">
@@ -68,9 +71,8 @@
                     {% endfor %}
                     </ul>
                 {% endif %}
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            {{ form.submit(class_="btn btn-primary") }}
+            <a href="{{url_for('login')}}">Sign in instead</a>{{ form.submit(class_="btn btn-primary") }}
           </form>
     </div>
 </div>

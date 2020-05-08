@@ -27,7 +27,7 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     user_name = StringField('User Name', [Email(message='Not a valid email address!'), DataRequired()])
     password = PasswordField('Password', [DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Login')
     
 
 

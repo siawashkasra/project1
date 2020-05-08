@@ -64,7 +64,10 @@ textarea {
 
 }
 
-.book {
+.book, .login {
     margin-top: 100px;
 }
 
+.register {
+    margin-top: 50px;
+}
