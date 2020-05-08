@@ -73,8 +73,8 @@ def index():
             if controller.get_searched_book(controller.user_searched()):
                 return render_template('index.html', books=controller.get_searched_book(controller.user_searched()), message={"success":controller.user_searched()})
             else:
-                return render_template('index.html', books=controller.get_all_books(), message={"error":controller.user_searched()})
-        return render_template('index.html', books=controller.get_all_books(), session=session["username"])
+                return render_template('index.html', books=controller.get_random_books(), message={"error":controller.user_searched()})
+        return render_template('index.html', books=controller.get_random_books(), session=session["username"])
     return redirect(url_for("login"))
 
 

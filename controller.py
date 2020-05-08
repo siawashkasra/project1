@@ -1,5 +1,5 @@
 import os
-import requests
+import requests, random
 
 from flask import Flask, session, redirect, url_for, flash
 from flask_session import Session
@@ -43,8 +43,9 @@ class Controller():
 
 
     #Return list of all books
-    def get_all_books(self):
-        books = self.db.execute("select * from books limit 9 offset 1").fetchall()
+    def get_random_books(self):
+        books = self.db.execute("select * from books where id in :random_ids;", 
+        {"random_ids": tuple(random.sample([x for x in range(1, 5000)], 9))}).fetchall()
         return books
 
 
