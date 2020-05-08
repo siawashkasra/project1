@@ -54,13 +54,12 @@ textarea {
 }
 
 
-.card {
+.signle {
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
 }
 
 .navbar-dark, .dropdown-menu, .dropdown-menu a:hover {
     background-color: darkslategray !important;
-    /* box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19); */
 
 }
 
