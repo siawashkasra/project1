@@ -63,7 +63,6 @@ class Controller():
         form = ReviewForm()
         if form.validate_on_submit():
             review = form.reviews.data
-            print(review)
             self.db.execute("insert into reviews (review, rate, user_id, book_id, create_date) values (:review, :rate, :user_id, :book_id, :create_date)", 
                                             {"review": review, "rate": "This is rate", "user_id": session["user_id"], "book_id": book_id, "create_date": "now()"})
             self.db.commit()
@@ -82,7 +81,6 @@ class Controller():
     def is_review_submitted(self, book_id):
         review = self.db.execute("select id from reviews where user_id = :user_id and book_id = :book_id", 
                                             {"user_id": session["user_id"], "book_id": book_id}).fetchone()
-        print(review)
         if review:
             return False
         return True
@@ -95,7 +93,6 @@ class Controller():
     #Users Model###########################################################################
     #Sign up a user
     def save(self, first_name, last_name, email, password, gender):
-        print(first_name)
         if first_name and last_name and email and password and gender:
             self.db.execute("insert into users (user_name, password) values(:user_name, :password)", {"user_name": email, "password": password})
             user = self.db.execute("select id from users where user_name= :user_name", {"user_name": email}).fetchone()
