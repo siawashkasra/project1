@@ -7,7 +7,7 @@
         <div class="col">
             {% for r in reviews["all_reviews"]%}
                 <blockquote class="blockquote">
-                <p class="mb-0">{{ r.review }}</p>
+                <p class="mb-0">{{ r.text }}</p>
                 <footer class="blockquote-footer text-right">{{ r.full_name }} <cite title="Source Title"><small class="text-muted">{{ r.create_date }}</small></cite></footer>
                 </blockquote>
             {% endfor %}

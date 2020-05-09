@@ -1,3 +1,7 @@
+html {
+    font-size: 1rem;
+  }
+
 input[type="search"] {
     text-align: center;
 }
@@ -5,12 +9,6 @@ input[type="search"] {
 input[type="search"]:active, input[type="search"]:hover {
     border-width: 2px;
 }
-
-.message {
-    font-size: large;
-    text-align: center;
-    font-weight: bolder;
-} 
 
 .col {
     padding: 10px;
@@ -69,4 +67,8 @@ textarea {
 
 .register {
     margin-top: 50px;
+}
+
+.card {
+    height: 100%;
 }

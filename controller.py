@@ -66,15 +66,15 @@ class Controller():
         form = ReviewForm()
         if form.validate_on_submit():
             review = form.reviews.data
-            self.db.execute("insert into reviews (review, rate, user_id, book_id, create_date) values (:review, :rate, :user_id, :book_id, :create_date)", 
-                                            {"review": review, "rate": "This is rate", "user_id": session["user_id"], "book_id": book_id, "create_date": "now()"})
+            self.db.execute("insert into reviews (text, rate, user_id, book_id, create_date) values (:text, :rate, :user_id, :book_id, :create_date)", 
+                                            {"text": review, "rate": "This is rate", "user_id": session["user_id"], "book_id": book_id, "create_date": "now()"})
             self.db.commit()
 
 
 
     #Return list of all reviews for a book
     def get_reviews_by_id(self, book_id):
-        reviews = self.db.execute("select concat(first_name, ' ', last_name) as full_name, user_name, review, date_trunc('second', create_date) as create_date from users u join profiles p on p.user_id = u.id join reviews r on r.user_id = u.id where book_id = :book_id order by create_date desc;", 
+        reviews = self.db.execute("select concat(first_name, ' ', last_name) as full_name, user_name, text, date_trunc('second', create_date) as create_date from users u join profiles p on p.user_id = u.id join reviews r on r.user_id = u.id where book_id = :book_id order by create_date desc;", 
                                                     {"book_id": book_id}).fetchall()
         return reviews
 

@@ -1,0 +1,15 @@
+<!-- Flash Messages-->
+          <div class="row">
+            <div class="col">
+              {% if message and message["error"] %}
+              <div class="alert alert-danger" role="alert">
+                <p>No results were found for <i><b>{{ message["error"] }}!</b></i></p>
+              </div>
+              {% elif message and message["success"] %}
+                <div class="alert alert-success" role="alert">
+                  <p>Results for <i><b>{{ message["success"] }}</b></i></p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+<!--Flash Messages Ends-->

@@ -4,30 +4,13 @@
 
 {% include "layouts/navbar.html" %}
 {% block main %}
-   <!-- Search Starts-->
-          <div class="row message">
-            <div class="col">
-              {% if message and message["error"] %}
-              <div class="alert alert-danger" role="alert">
-                <p>No results were found for <i><b>{{ message["error"] }}!</b></i></p>
-              </div>
-              {% elif message and message["success"] %}
-                <div class="alert alert-success" role="alert">
-                  <p>Results for <i><b>{{ message["success"] }}</b></i></p>
-                </div>
-              {% endif %}
-            </div>
-          </div>
-<!--Search Ends-->
-<div class="row">
+   
+{% include "layouts/flash.html" %}
+<div class="row test">
         {% for book in books %}
-        <div class="col">
+        <div class="col-lg-4 col-md-6 p-2">
             <a href="{{url_for('show', id=book.id)}}" class="card_link">
-              <div class="card" style="width: 18rem;">
-                <!-- <div class="row">
-                  <div class="col-4">
-                  </div>
-                </div> -->
+              <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
                       <div class="col-9">
