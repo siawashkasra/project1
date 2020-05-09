@@ -8,6 +8,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import render_template, request
 from flask_wtf.csrf import CSRFProtect
 from forms import RegistrationForm, LoginForm, ReviewForm
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 
 class Controller():
@@ -95,7 +97,7 @@ class Controller():
     #Sign up a user
     def save(self, first_name, last_name, email, password, gender):
         if first_name and last_name and email and password and gender:
-            self.db.execute("insert into users (user_name, password) values(:user_name, :password)", {"user_name": email, "password": password})
+            self.db.execute("insert into users (user_name, password) values(:user_name, :password)", {"user_name": email, "password": generate_password_hash(password, 'sha256')})
             user = self.db.execute("select id from users where user_name= :user_name", {"user_name": email}).fetchone()
             self.db.execute("insert into profiles (first_name, last_name, gender, user_id) values(:first_name, :last_name, :gender, :user_id)",
                                                 {
@@ -110,10 +112,12 @@ class Controller():
     #Check if user provided correct credentials
     def is_credentials_valid(self, user_name, password):
         if user_name and password:
-            credentials = self.db.execute("select id from users where user_name = :user_name and password = :password", 
-                                                    {"user_name": user_name, "password": password}).fetchone()
+            credentials = self.db.execute("select user_name, password from users where user_name = :user_name",
+                                                    {"user_name": user_name}).fetchone()
+            print(credentials)                                    
             if credentials:
-                return True
+                if credentials[0] == user_name and check_password_hash(credentials [1], password):
+                    return True
         return False
 
 

@@ -13,6 +13,7 @@ from controller import Controller
 
 
 
+
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 KEY = "dyzaWnHdIdb8VG2oGwSUcw"
