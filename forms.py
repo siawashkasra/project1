@@ -39,7 +39,6 @@ class ReviewForm(FlaskForm):
 
 
     def validate_rating(self, field):
-        print(type(field.data))
         if field.data is None:
             raise ValidationError("Please provide a rating!")
 

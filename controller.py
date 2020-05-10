@@ -63,7 +63,6 @@ class Controller():
     #Reviews Model#########################################################################
     #Add a review for a book
     def add_review(self, book_id, review, rating):
-        print("Inside review", review, rating)
         self.db.execute("insert into reviews (text, rating, user_id, book_id, create_date) values (:text, :rating, :user_id, :book_id, :create_date)", 
                                             {"text": review, "rating": rating, "user_id": session["user_id"], "book_id": book_id, "create_date": "now()"})
         self.db.commit()
@@ -111,7 +110,6 @@ class Controller():
         if user_name and password:
             credentials = self.db.execute("select user_name, password from users where user_name = :user_name",
                                                     {"user_name": user_name}).fetchone()
-            print(credentials)                                    
             if credentials:
                 if credentials[0] == user_name and check_password_hash(credentials [1], password):
                     return True
@@ -128,3 +126,12 @@ class Controller():
         if request.args.get("search"):
             return request.args.get("search")
         return False
+
+    #API###################################################################################
+    #Return book info
+    def get_book_by_isbn(self, isbn):
+        book = self.db.execute("select title, author, year, isbn, count(text) as review_count, COALESCE(trunc(avg(rating), 1), 0) as average_score from books b left join reviews r on r.book_id = b.id where isbn = :isbn group by title, author, year, isbn;",
+                                                            {"isbn": isbn}).fetchone()
+        if book:
+            return dict(book)
+        return "No books match those ISBNs."

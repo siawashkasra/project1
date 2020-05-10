@@ -1,5 +1,6 @@
 import os
 import requests
+from flask import jsonify
 
 from flask import Flask, session, redirect, url_for, flash
 from flask_session import Session
@@ -16,6 +17,7 @@ from controller import Controller
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
+app.config['JSON_SORT_KEYS'] = False
 KEY = "dyzaWnHdIdb8VG2oGwSUcw"
 URL = "https://www.goodreads.com/book"
 # Set the secret key to some random bytes. Keep this really secret!
@@ -93,3 +95,9 @@ def show(id):
         ratings = res.json()["books"][0]
         return render_template('pages/book.html', book=book, ratings=ratings, form =form, reviews={"all_reviews": controller.get_reviews_by_id(book.id), "current_user_submitted": controller.is_review_submitted(book.id)})
     return redirect(url_for("login"))
+
+
+
+@app.route("/api/<string:isbn>", methods=['GET'])
+def api(isbn):    
+    return jsonify(controller.get_book_by_isbn(isbn))
