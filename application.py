@@ -88,7 +88,6 @@ def show(id):
         if request.method=="POST":
             if form.validate_on_submit():
                 controller.add_review(id, form.reviews.data, form.rating.data)
-                return redirect(url_for("show", id=id))
         book = controller.get_book_by_id(id)
         res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
         ratings = res.json()["books"][0]
