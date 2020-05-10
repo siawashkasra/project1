@@ -34,9 +34,9 @@ CREATE TABLE reviews (
 
                         id SERIAL PRIMARY KEY,
                         review VARCHAR(255) NOT NULL,
-                        rate VARCHAR(255) NOT NULL,
-                        book_id INTEGER REFERENCES books,
-                        user_id INTEGER REFERENCES users,
+                        rating INTEGER NOT NULL,
+                        book_id INTEGER REFERENCES books NOT NULL,
+                        user_id INTEGER REFERENCES users NOT NULL,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );

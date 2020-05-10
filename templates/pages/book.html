@@ -3,13 +3,25 @@
 {% include "layouts/navbar.html" %}
 
 {% block main %}
+
+
     <div class="row book">
         <div class="col">
             {% for r in reviews["all_reviews"]%}
                 <blockquote class="blockquote">
                 <p class="mb-0">{{ r.text }}</p>
-                <footer class="blockquote-footer text-right">{{ r.full_name }} <cite title="Source Title"><small class="text-muted">{{ r.create_date }}</small></cite></footer>
+                <div class="row">
+                    <div class="col">
+                        {% for i in range(r.rating) %}
+                            <span class="fa fa-star checked"></span>
+                        {% endfor %}
+                    </div>
+                    <div class="col">
+                        <footer class="blockquote-footer text-right">{{ r.full_name }} <cite title="Source Title"><small class="text-muted">{{ r.create_date }}</small></cite></footer>
+                    </div>
+                </div>
                 </blockquote>
+                <hr>
             {% endfor %}
             <div class="row">
                 {% if reviews["current_user_submitted"] %}
@@ -18,14 +30,28 @@
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <div class="mb-3">
                           {{ form.reviews(class_="form-control") }}
-                          {% if form.submit.errors %}
-                          <ul>
-                            {% for error in form.submit.errors%}
-                                <li>error</li>
+                          {% if form.reviews.errors %}
+                            <ul>
+                            {% for error in form.reviews.errors %}
+                                <li>{{ error }}</li>
                             {% endfor %}
-                          </ul>
+                            </ul>
                           {% endif %}
                         </div>
+                        <span>Rate: </span>
+                          <span class="starRating">
+                            {% for rate in form.rating %}
+                                {{ rate }}
+                                <label for="{{ rate.id }}">{{ rate.value }}</label>
+                            {% endfor %}
+                            </span>
+                            {% if form.rating.errors %}
+                            <ul>
+                            {% for error in form.rating.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
                         {{ form.submit(class_="btn btn-primary") }}
                     </form>
                 </div>

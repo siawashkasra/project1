@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, SubmitField, PasswordField, RadioField, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, RadioField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, URL, ValidationError
 import email_validator
 from sqlalchemy import create_engine
@@ -33,5 +33,16 @@ class LoginForm(FlaskForm):
 
 
 class ReviewForm(FlaskForm):
-    reviews = TextAreaField('Review', [DataRequired()], render_kw={"placeholder": "Please enter your review"})
+    reviews = TextAreaField('Review', [DataRequired()], render_kw={"placeholder": "Please write a review", "rows": 4})
+    rating = RadioField('Rating', choices = [(5,'5'),(4,'4'),(3,'3'),(2,'2'),(1,'1')], coerce=int) 
     submit = SubmitField('Leave a review')
+
+
+    def validate_rating(self, field):
+        print(type(field.data))
+        if field.data is None:
+            raise ValidationError("Please provide a rating!")
+
+    def validate_reviews(self, field):
+        if len(field.data) < 50:
+            raise ValidationError("Review must not be less than 50 characters!")
