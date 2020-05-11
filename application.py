@@ -30,6 +30,15 @@ if not os.getenv("DATABASE_URL"):
             raise RuntimeError("DATABASE_URL is not set")
 
 
+
+
+
+
+
+@app.route("/")
+def welcome():
+    return render_template("landing.html")
+
 ##########################################################################################
 #Routes
 
@@ -69,7 +78,7 @@ def logout():
 
 
 #Index
-@app.route("/")
+@app.route("/index")
 def index():
     if "username" in session:    
         if controller.user_searched():
@@ -97,7 +106,7 @@ def show(id):
     return redirect(url_for("login"))
 
 
-
+#API
 @app.route("/api/<string:isbn>", methods=['GET'])
 def api(isbn):    
     return jsonify(controller.get_book_by_isbn(isbn))

@@ -38,7 +38,7 @@ hr {
 .btn-primary {
     float: right;
     margin: 5px;
-    background-color: teal;
+    background-color: #714AB1;
 }
 
 
@@ -47,7 +47,7 @@ textarea {
 }
 
 .btn:hover {
-    background-color: teal !important;
+    background-color: #714AB1 !important;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
 }
 
@@ -57,7 +57,7 @@ textarea {
 }
 
 .navbar-dark, .dropdown-menu, .dropdown-menu a:hover {
-    background-color: darkslategray !important;
+    background-color: #714AB1 !important;
 
 }
 
@@ -110,4 +110,24 @@ textarea {
 .starRating:not(old) > label:hover ~ label:before,
 .starRating:not(:hover) > :checked ~ label:before{
   opacity : 1;
+}
+
+.header {
+    height: 100vh;
+    background-color: #714AB1;
+    color: white;
+    text-align: center;
+}
+
+.banner {
+    margin-top: 100px;
+}
+
+.sample {
+    color: black;
+    top: 100px;
+}
+
+.btn-block {
+    margin-top:50px;
 }

@@ -1,0 +1,86 @@
+{% extends "layouts/main.html" %}
+
+{% include "layouts/navbar.html" %}
+
+{% block header %}
+
+<div class="header">
+    <div class="container">
+            <div class="row">
+                <div class="col">
+                <div class="banner">
+                    <div class="row justify-content-start">
+                        <div class="col">
+                            <h3>Robut API, Fast Search Engine, Secure</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 col-lg-9">
+                            <h5>
+                                Search, Review and Rate
+                            </h5>
+                        </div>
+                    </div>
+            
+                    <div class="row justify-content-start">
+                        <div class="col-md-9 col-lg-9">
+                            <h5>Use the Robut API to retrieve a book by an ISBN in json format</h5>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a href="" class="btn btn-primary btn-lg btn-block">Login</a>
+                    </div>
+                    <div class="col">
+                        <a href="" class="btn btn-primary btn-lg btn-block">Sign Up</a>
+                    </div>
+                </div>
+                </div>
+                <div class="col">
+                    <div class="row justify-content-center">
+                        <div class="col"></div>
+                        <div class="col">
+                            <div class="card sample single" style="width: 30rem;">
+                                <div class="row justify-content-between">
+                                    <div class="col-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Second Grave on the Left</h5>
+                                            <p class="card-text"><small class="text-muted">Author </small>Darynda Jones</p>
+                                            <div class="row justify-content-between">
+                                                <div class="col-3">
+                                                    <small class="text-muted">Year</small>
+                                                    <p class="card-text">2011</p>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted">ISBN</small>
+                                                    <p class="card-text">0312360819</p>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="row justify-content-between">
+                                                <div class="col">
+                                                    {% for i in range("4.27"|int) %}
+                                                        <span class="fa fa-star checked"></span>
+                                                    {% endfor %}
+                                                    {% if "4.27" | float %}
+                                                        <span class="fa fa-star-half checked"></span>
+                                                    {% endif %}
+                                                    <p class="card-text">4.27 (<small class="text-muted">37710</small>)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <img class="card-book-cover card-img-top img-fluid" src="{{ url_for('static', filename='images/sample.jpg') }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

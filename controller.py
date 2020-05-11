@@ -43,8 +43,8 @@ class Controller():
         return False
 
 
-
-    #Return list of all books
+        
+    #Return list of 9 random books
     def get_random_books(self):
         books = self.db.execute("select * from books where id in :random_ids;", 
         {"random_ids": tuple(random.sample([x for x in range(1, 5000)], 9))}).fetchall()
