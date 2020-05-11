@@ -61,14 +61,6 @@ textarea {
 
 }
 
-.book, .login {
-    margin-top: 100px;
-}
-
-.register {
-    margin-top: 20px;
-}
-
 .custom-card {
     height: 100%;
 }
@@ -126,6 +118,7 @@ textarea {
 .sample {
     color: black;
     width: 100%;
+    text-align: left;
 }
 
 .btn-block {
@@ -141,11 +134,25 @@ code span {
     .sample {
         top: 0px;
     }
+
+    .book, .login, .register {
+        margin-top: 20px;
+    }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .sample {
         top: 100px;
+        width: 100%
+
+    }
+
+    .book, .login {
+        margin-top: 100px;
+    }
+
+    .register {
+        margin-top: 20px;
     }
 }
