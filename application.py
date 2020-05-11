@@ -37,6 +37,8 @@ if not os.getenv("DATABASE_URL"):
 
 @app.route("/")
 def welcome():
+    if "username" in session:
+        return redirect(url_for('index'))
     return render_template("landing.html")
 
 ##########################################################################################
@@ -73,7 +75,7 @@ def login():
 def logout():
     session.pop("username", None)
     session.pop("user_id", None)
-    return redirect(url_for("login"))
+    return redirect(url_for("welcome"))
 
 
 
@@ -105,6 +107,12 @@ def show(id):
         return render_template('pages/book.html', book=book, ratings=ratings, form =form, reviews={"all_reviews": controller.get_reviews_by_id(book.id), "current_user_submitted": controller.is_review_submitted(book.id)})
     return redirect(url_for("login"))
 
+
+
+#API
+@app.route("/api")
+def doc():
+    return render_template('pages/api.html')
 
 #API
 @app.route("/api/<string:isbn>", methods=['GET'])

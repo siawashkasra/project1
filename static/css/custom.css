@@ -66,7 +66,7 @@ textarea {
 }
 
 .register {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .custom-card {
@@ -125,9 +125,27 @@ textarea {
 
 .sample {
     color: black;
-    top: 100px;
+    width: 100%;
 }
 
 .btn-block {
     margin-top:50px;
+}
+
+code span {
+    padding-left: 15px;
+}
+
+/* Small devices (landscape phones, 500px and up) */
+@media (min-width: 500px) {
+    .sample {
+        top: 0px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .sample {
+        top: 100px;
+    }
 }

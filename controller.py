@@ -43,7 +43,7 @@ class Controller():
         return False
 
 
-        
+
     #Return list of 9 random books
     def get_random_books(self):
         books = self.db.execute("select * from books where id in :random_ids;", 
@@ -55,7 +55,10 @@ class Controller():
     #Return a book by an ID
     def get_book_by_id(self, id):
         book = self.db.execute("select * from books where id = :id", {"id": id}).fetchone()
-        return book
+        if book:
+            return book
+        return False
+        
     #######################################################################################
    
    

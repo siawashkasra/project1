@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% include "layouts/navbar.html" %}
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4><B>API</B></h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <h5>INTRODUCTION</h5>
+            <hr>
+            <p>
+                The Reviewer API allows developers to access around 5000 of books in json format.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <h5>GETTING STARTED</h5>
+            <hr>
+            <p>
+                The easiest wasy to get started using the API is to go to <a href="{{ url_for('api', isbn='159514322X') }}">API</a>
+                and enter your ISBN, API return the result in JSON format.
+            </p>
+                <code>
+                    {<br>
+                        <span>"title": "The Ruby Circle",</span><br> 
+                        <span>"author": "Richelle Mead",</span><br>
+                        <span>"year": "2015",</span><br> 
+                        <span>"isbn": "159514322X",</span><br> 
+                        <span>"review_count": 3,</span><br> 
+                        <span>"average_score": 4.6</span><br>
+                    }
+                </code>
+        </div>
+    </div>
+</div>
+{% endblock %}
