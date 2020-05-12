@@ -4,3 +4,4 @@ psycopg2-binary
 SQLAlchemy
 Flask-WTF
 email_validator
+gunicorn
