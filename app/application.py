@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from flask import render_template, request
 from flask_wtf.csrf import CSRFProtect
-from .forms import RegistrationForm, LoginForm, ReviewForm
+from forms import RegistrationForm, LoginForm, ReviewForm
 from controller import Controller
 
 
