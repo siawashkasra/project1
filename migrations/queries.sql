@@ -25,18 +25,16 @@ CREATE TABLE profiles (
                         first_name VARCHAR(255) NOT NULL,
                         last_name VARCHAR(255) NOT NULL,
                         gender VARCHAR(255) NOT NULL,
-                        email VARCHAR(255) NOT NULL, 
-                        password VARCHAR(255) NOT NULL,
                         user_id INTEGER REFERENCES users
 
 );
 CREATE TABLE reviews (
 
                         id SERIAL PRIMARY KEY,
-                        review VARCHAR(255) NOT NULL,
+                        text VARCHAR(255) NOT NULL,
                         rating INTEGER NOT NULL,
                         book_id INTEGER REFERENCES books NOT NULL,
                         user_id INTEGER REFERENCES users NOT NULL,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                        create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
 );

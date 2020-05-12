@@ -18,14 +18,16 @@ class Import:
         print("Population started!")
         with open(file) as books_csv:
             books = csv.reader(books_csv)
+            counter = 1
             for isbn, title, author, year in books:
                 if isbn=='isbn':
                     continue
                 self.insert(isbn, title, author, year)
+                print(f"Inserting {counter} out of 5000 records...")
+                counter+=1
             
     #Insert into table
     def insert(self, isbn, title, author, year):
-        print("Inserting...")
         try:
             Import.db.execute("INSERT INTO books (isbn, title, author, year) values (:isbn, :title, :author, :year)",
                  {"isbn": isbn, "title": title, "author": author, "year": year})
