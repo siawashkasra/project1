@@ -1,7 +1,7 @@
 import os
 import requests, random
 
-from flask import Flask, session, redirect, url_for, flash
+from flask import Flask, session, redirect, url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker

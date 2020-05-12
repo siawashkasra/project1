@@ -64,7 +64,6 @@ def login():
         if form.validate_on_submit():
             if controller.is_credentials_valid(form.user_name.data, form.password.data):
                 controller.add_session(form.user_name.data)
-                flash("You are successfully logged in.")
                 return redirect(url_for('index'))
             flash("Username/Password provided are wrong!", "error")
 
@@ -107,7 +106,6 @@ def show(id):
             res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": f"{KEY}", "isbns": f"{book.isbn}"})
             ratings = res.json()["books"][0]
             return render_template('pages/book.html', book=book, ratings=ratings, form =form, reviews={"all_reviews": controller.get_reviews_by_id(book.id), "current_user_submitted": controller.is_review_submitted(book.id)})
-        flash("No books match those IDs.", "error")
         return render_template('pages/book.html')
     return redirect(url_for("login"))
 
