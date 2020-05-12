@@ -191,7 +191,7 @@ class Controller():
     #Return book info
     def get_book_by_isbn(self, isbn):
         try:
-            book = self.db.execute("select title, author, year, isbn, count(text) as review_count, COALESCE(trunc(avg(rating), 1), 0) as average_score from books b left join reviews r on r.book_id = b.id where isbn = :isbn group by title, author, year, isbn;",
+            book = self.db.execute("select title, author, year, isbn, count(text) as review_count, CAST(COALESCE(trunc(avg(rating), 1), 0) as varchar) as average_score from books b left join reviews r on r.book_id = b.id where isbn = :isbn group by title, author, year, isbn;",
                                                                 {"isbn": isbn}).fetchone()
             if book:
                 return dict(book)
