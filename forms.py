@@ -30,6 +30,13 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
     
 
+    def validate_username(self, field):
+        if field is None:
+            raise ValidationError("Please provide a username!")
+
+    def validate_password(self, field):
+        if field is None:
+            raise ValidationError("Please provide a password!")
 
 
 class ReviewForm(FlaskForm):

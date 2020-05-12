@@ -3,8 +3,16 @@
 {% include "layouts/navbar.html" %}
 
 {% block main %}
-
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-danger">
+            <strong class="{{ category }}">{{ message }}</strong>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% if book %}
     <div class="row book">
         <div class="col">
             {% for r in reviews["all_reviews"]%}
@@ -97,5 +105,6 @@
         </div>
         
     </div>
+    {% endif  %}
   
 {% endblock %}
