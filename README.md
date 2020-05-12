@@ -20,7 +20,7 @@ You can access almost 5000 books, see their Goodreads rating and provide your ow
 
 <h2>Set up</h2>
 
-<p>Navigate into setup directory and run<./p>
+<p>Make sure Python3 and its dependencies are installed, navigate into setup directory and run.</p>
 <pre>$ sudo pip3 install requirements.txt</pre>
 <p>Export the DATABASE_URL.</p>
 <pre>$ export DATABASE_URL="postgres://kidsgevwmzrtwx:63a8ae2a9b7785cac7bbe07705db6efd1d8a1e517b2de8c8285cbbf8974a6bf5@ec2-52-202-22-140.compute-1.amazonaws.com:5432/d9g09asmej8sb2"
