@@ -31,3 +31,5 @@ You can access almost 5000 books, see their Goodreads rating and provide your ow
 <pre>$ export FLASK_ENV=production</pre>
 <p>Finally run the following to start the server.<p>
 <pre>$ flask run</pre>
+
+<p>The application is currently running on Heroku at <a href="https://reviewer-32.herokuapp.com/" target="blank">Reviewer</a></p>
