@@ -46,9 +46,12 @@ class Controller():
 
     #Return list of 9 random books
     def get_random_books(self):
-        books = self.db.execute("select * from books where id in :random_ids;", 
-        {"random_ids": tuple(random.sample([x for x in range(1, 5000)], 9))}).fetchall()
-        return books
+        try:
+            books = self.db.execute("select * from books where id in :random_ids;", 
+            {"random_ids": tuple(random.sample([x for x in range(1, 5000)], 9))}).fetchall()
+            return books
+        except Exception as e:
+            self.db.close()
 
 
 
@@ -66,9 +69,17 @@ class Controller():
     #Reviews Model#########################################################################
     #Add a review for a book
     def add_review(self, book_id, review, rating):
-        self.db.execute("insert into reviews (text, rating, user_id, book_id, create_date) values (:text, :rating, :user_id, :book_id, :create_date)", 
-                                            {"text": review, "rating": rating, "user_id": session["user_id"], "book_id": book_id, "create_date": "now()"})
-        self.db.commit()
+
+        try:
+            self.db.execute("insert into reviews (text, rating, user_id, book_id, create_date) values (:text, :rating, :user_id, :book_id, :create_date)", 
+                                      {"text": review, "rating": rating, "user_id": session["user_id"], "book_id": book_id, "create_date": "now()"})
+            
+            self.db.commit()
+        except Exception as e:
+            self.db.rollback()
+        else:
+            self.db.close()
+        
 
 
 
@@ -96,15 +107,22 @@ class Controller():
     #Sign up a user
     def save(self, first_name, last_name, email, password, gender):
         if first_name and last_name and email and password and gender:
-            self.db.execute("insert into users (user_name, password) values(:user_name, :password)", {"user_name": email, "password": generate_password_hash(password, 'sha256')})
-            user = self.db.execute("select id from users where user_name= :user_name", {"user_name": email}).fetchone()
-            self.db.execute("insert into profiles (first_name, last_name, gender, user_id) values(:first_name, :last_name, :gender, :user_id)",
+
+            try:
+                self.db.execute("insert into users (user_name, password) values(:user_name, :password)", {"user_name": email, "password": generate_password_hash(password, 'sha256')})
+                user = self.db.execute("select id from users where user_name= :user_name", {"user_name": email}).fetchone()
+                self.db.execute("insert into profiles (first_name, last_name, gender, user_id) values(:first_name, :last_name, :gender, :user_id)",
                                                 {
                                                 "first_name": first_name, 
                                                 "last_name": last_name, 
                                                 "gender": gender, 
                                                 "user_id": user.id})
-            self.db.commit()
+                self.db.commit()
+            except Exception as e:                                    
+                self.db.rollback()
+            
+            else:
+                self.db.close()
 
 
 

@@ -31,7 +31,7 @@ CREATE TABLE profiles (
 CREATE TABLE reviews (
 
                         id SERIAL PRIMARY KEY,
-                        text VARCHAR(255) NOT NULL,
+                        text VARCHAR NOT NULL,
                         rating INTEGER NOT NULL,
                         book_id INTEGER REFERENCES books NOT NULL,
                         user_id INTEGER REFERENCES users NOT NULL,

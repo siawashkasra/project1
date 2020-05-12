@@ -23,7 +23,7 @@ You can access almost 5000 books, see their Goodreads rating and provide your ow
 <p>Make sure Python3 and its dependencies are installed, navigate into setup directory and run.</p>
 <pre>$ sudo pip3 install -r requirements.txt</pre>
 <p>Export the DATABASE_URL.</p>
-<pre>$ export DATABASE_URL="postgres://jldcpqdsbjwrih:161787854543d172b901f4ee815df557266254f5d4f36925b7776ba5c82cb357@ec2-3-222-150-253.compute-1.amazonaws.com:5432/d5pflvngn62bqp"</pre>
+<pre>$ export DATABASE_URL="postgres://zbwmzsgqpofffs:492b79ba9b9503a860ae37b110cad4ac9aa64a83e9ab163c3d4acc87feb40dcc@ec2-3-222-150-253.compute-1.amazonaws.com:5432/d98iacqrfka3q5"</pre>
 <p>Navigate to migrations directory, run.</p>
 <pre>$ python3 schema.py</pre>
 <p>Export the environment variables from the .env file and run.</p>
